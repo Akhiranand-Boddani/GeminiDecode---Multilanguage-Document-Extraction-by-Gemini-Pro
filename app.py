@@ -1,16 +1,19 @@
 # Import necessary libraries
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 import streamlit as st
 import google.generativeai as genai
 from PIL import Image
 
 # Load environment variables
-load_dotenv()
+#load_dotenv()
 
 # Configure the Google Generative AI API
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+#genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# Retrieve the API key from Streamlit secrets
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+genai.configure(api_key=GOOGLE_API_KEY)
 # Define the prompt for Gemini model
 input_prompt = """
 You are an expert in understanding invoices.
