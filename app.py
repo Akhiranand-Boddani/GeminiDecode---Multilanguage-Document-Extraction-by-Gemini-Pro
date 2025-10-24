@@ -82,7 +82,7 @@ def get_gemini_response(input_text, image_data, prompt):
     if genai is not None:
         try:
             # Load the Gemini Pro Vision model
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-pro-vision')
             
             # Generate the response
             response = model.generate_content([input_text, image_data, prompt])
