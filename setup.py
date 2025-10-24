@@ -30,7 +30,7 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Text Processing :: Linguistic",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.8,<3.9.7 || >3.9.7",
     install_requires=requirements,
     entry_points={
         "console_scripts": [
