@@ -25,13 +25,14 @@ classifiers = [
 ]
 requires-python = ">=3.8,<3.9.7 || >3.9.7"
 dependencies = [
-    "streamlit>=1.28.0",
-    "google-generativeai>=0.3.0",
-    "python-dotenv>=1.0.0",
-    "langchain>=0.0.300",
+    "streamlit>=1.31.0",
+    "google-generativeai>=0.7.0",
+    "python-dotenv>=1.0.1",
+    "langchain>=0.2.0",
+    "langchain-google-genai>=1.0.0",
     "PyPDF2>=3.0.1",
-    "chromadb>=0.4.0",
-    "faiss-cpu>=1.7.4",
+    "chromadb>=0.5.0",
+    "faiss-cpu>=1.8.0",
     "Pillow>=10.0.0",
 ]
 

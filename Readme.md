@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Streamlit](https://img.shields.io/badge/streamlit-1.0%2B-red)
+![Streamlit](https://img.shields.io/badge/streamlit-1.31%2B-red)
 
 GeminiDecode is a powerful tool designed to streamline information extraction from multilingual documents, including invoices and other complex formats. It leverages Google's Gemini Pro Vision API for advanced document analysis and understanding. Users can query and retrieve structured information across languages, making it ideal for overcoming language barriers and processing large document volumes.
 
@@ -22,12 +22,13 @@ GeminiDecode is a powerful tool designed to streamline information extraction fr
 ## 🛠️ Technology Stack
 
 - **Python**: Core programming language (3.8+)
-- **Streamlit**: Framework for creating the interactive web interface
-- **Google Generative AI (Gemini Pro Vision)**: API for image-based generative content
-- **Pillow (PIL)**: Image processing and handling
-- **LangChain**: Prompt handling and LLM integration
-- **PyPDF2**: PDF file processing capabilities
-- **ChromaDB & FAISS-CPU**: Vector databases for embedding storage
+- **Streamlit**: Framework for creating the interactive web interface (1.31+)
+- **Google Generative AI (Gemini Pro Vision)**: API for image-based generative content (0.7.0+)
+- **Pillow (PIL)**: Image processing and handling (10.0.0+)
+- **LangChain**: Prompt handling and LLM integration (0.2.0+)
+- **PyPDF2**: PDF file processing capabilities (3.0.1+)
+- **ChromaDB**: Vector databases for embedding storage (0.5.0+)
+- **FAISS-CPU**: Vector databases for embedding storage (1.8.0+)
 
 ## 🚀 Getting Started
 

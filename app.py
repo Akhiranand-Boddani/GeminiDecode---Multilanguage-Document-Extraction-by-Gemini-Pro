@@ -9,20 +9,19 @@ genai = None
 try:
     import google.generativeai as genai
     GOOGLE_API_AVAILABLE = True
-except ImportError as e:
-    st.warning(f"Google Generative AI library not found: {e}")
+except ImportError:
+    st.warning("Google Generative AI library not found. Please install it with: pip install google-generativeai")
 
 # Load environment variables
 # Try to get API key from Streamlit secrets first, then from environment variables
 GOOGLE_API_KEY = None
-if GOOGLE_API_AVAILABLE:
-    try:
-        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-    except:
-        GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+try:
+    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+except:
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Configure the Google Generative AI API only if key is available
-if GOOGLE_API_KEY and GOOGLE_API_AVAILABLE:
+if GOOGLE_API_KEY:
     try:
         genai.configure(api_key=GOOGLE_API_KEY)
         API_CONFIGURED = True
@@ -82,7 +81,7 @@ def get_gemini_response(input_text, image_data, prompt):
     if genai is not None:
         try:
             # Load the Gemini Pro Vision model
-            model = genai.GenerativeModel('gemini-pro')
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
             # Generate the response
             response = model.generate_content([input_text, image_data, prompt])
