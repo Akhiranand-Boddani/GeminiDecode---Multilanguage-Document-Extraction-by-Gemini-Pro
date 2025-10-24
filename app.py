@@ -66,7 +66,7 @@ def get_user_input():
 
 def display_image(image):
     """Display the uploaded image."""
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
 
 def process_image(uploaded_file):
     """Process the uploaded image."""
