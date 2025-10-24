@@ -1,19 +1,37 @@
 # Import necessary libraries
-#from dotenv import load_dotenv
 import os
 import streamlit as st
-import google.generativeai as genai
 from PIL import Image
 
+# Try to import Google Generative AI
+GOOGLE_API_AVAILABLE = False
+genai = None
+try:
+    import google.generativeai as genai
+    GOOGLE_API_AVAILABLE = True
+except ImportError as e:
+    st.warning(f"Google Generative AI library not found: {e}")
+
 # Load environment variables
-#load_dotenv()
+# Try to get API key from Streamlit secrets first, then from environment variables
+GOOGLE_API_KEY = None
+if GOOGLE_API_AVAILABLE:
+    try:
+        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    except:
+        GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Configure the Google Generative AI API
-#genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+# Configure the Google Generative AI API only if key is available
+if GOOGLE_API_KEY and GOOGLE_API_AVAILABLE:
+    try:
+        genai.configure(api_key=GOOGLE_API_KEY)
+        API_CONFIGURED = True
+    except Exception as e:
+        st.error(f"Failed to configure Google Generative AI: {e}")
+        API_CONFIGURED = False
+else:
+    API_CONFIGURED = False
 
-# Retrieve the API key from Streamlit secrets
-GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-genai.configure(api_key=GOOGLE_API_KEY)
 # Define the prompt for Gemini model
 input_prompt = """
 You are an expert in understanding invoices.
@@ -34,6 +52,14 @@ text = (
 )
 styled_text = f"<span style='font-family:serif;'>{text}</span>"
 st.markdown(styled_text, unsafe_allow_html=True)
+
+# Check if Google API is available and API key is set
+if not GOOGLE_API_AVAILABLE:
+    st.error("Google Generative AI library is not installed. Please install it with: pip install google-generativeai")
+    st.stop()
+elif not API_CONFIGURED:
+    st.warning("API key not found or configuration failed. Please set your GOOGLE_API_KEY in Streamlit secrets or environment variables.")
+    st.stop()
 
 # Text input for the prompt
 input_text = st.text_input("Input Prompt:", key="input")
@@ -63,14 +89,20 @@ def input_image_details(uploaded_file):
 
 # Function to interact with Gemini model
 def get_gemini_response(input_text, image_data, prompt):
-    # Load the Gemini Pro Vision model
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    
-    # Generate the response
-    response = model.generate_content([input_text, image_data, prompt])
-    
-    # Return the response text
-    return response.text if hasattr(response, 'text') else response
+    if genai is not None:
+        try:
+            # Load the Gemini Pro Vision model
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            
+            # Generate the response
+            response = model.generate_content([input_text, image_data, prompt])
+            
+            # Return the response text
+            return response.text if hasattr(response, 'text') else str(response)
+        except Exception as e:
+            return f"Error generating response: {e}"
+    else:
+        return "Google Generative AI is not available."
 
 # If the submit button is clicked
 if submit:
